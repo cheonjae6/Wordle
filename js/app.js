@@ -7,9 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let getTodayDate = new Date();
     let Day_of_the_week = getTodayDate.getDay();
 
-    console.log(Day_of_the_week);
-
-    let word = ["apple", "dairy", "yellow", "green", "black", "white", "berry"]
+    let word = ["apple", "dairy", "Hello", "green", "black", "white", "berry"]
     let guessedWordCount = 0;
 
     const keys = document.querySelectorAll(".keyboard-row button");
@@ -84,6 +82,18 @@ document.addEventListener("DOMContentLoaded", () => {
         guessedWords.push([]);
     }
 
+    function handleDeleteLetter() {
+        const currentWordArr = getCurrentWordArr();
+        const removeLetter = currentWordArr.pop();
+
+        guessedWords[guessedWords.length - 1] = currentWordArr;
+
+        const lastLetterEl = document.getElementById(String(availableSpace - 1));
+
+        lastLetterEl.textContent = '';
+        availableSpace = availableSpace - 1;
+    }
+
     function createSquares() {
         const gameBoard = document.getElementById("board");
 
@@ -103,6 +113,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (letter === 'enter') {
                 handleSubmitWord();
+                return;
+            }
+
+            if (letter === 'del') {
+                handleDeleteLetter();
                 return;
             }
 
